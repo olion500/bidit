@@ -154,3 +154,10 @@ Validate workflow YAML files against schema:
 ```
 https://exp.host/--/api/v2/workflows/schema
 ```
+
+## Active Technologies
+- TypeScript strict mode, React 19, React Native 0.81, Expo SDK ~54 (001-auction-platform)
+- Supabase PostgreSQL (cloud-hosted) (001-auction-platform)
+
+## Recent Changes
+- 001-auction-platform: Added TypeScript strict mode, React 19, React Native 0.81, Expo SDK ~54
