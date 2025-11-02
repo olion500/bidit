@@ -28,12 +28,12 @@ description: "Task list for Mobile Auction Platform (Bidit)"
 
 **Purpose**: Initialize Supabase backend and install core dependencies
 
-- [ ] T001 Create Supabase project at https://supabase.com (note project URL and API keys)
-- [ ] T002 Configure environment variables in .env file (EXPO_PUBLIC_SUPABASE_URL, EXPO_PUBLIC_SUPABASE_ANON_KEY)
-- [ ] T003 [P] Install Supabase client via `npx expo install @supabase/supabase-js`
-- [ ] T004 [P] Install Expo Image via `npx expo install expo-image`
-- [ ] T005 Verify TypeScript strict mode enabled in tsconfig.json
-- [ ] T006 Verify React Compiler enabled in app.json (experiments.reactCompiler: true)
+- [x] T001 Create Supabase project at https://supabase.com (note project URL and API keys)
+- [x] T002 Configure environment variables in .env file (EXPO_PUBLIC_SUPABASE_URL, EXPO_PUBLIC_SUPABASE_ANON_KEY)
+- [x] T003 [P] Install Supabase client via `npx expo install @supabase/supabase-js`
+- [x] T004 [P] Install Expo Image via `npx expo install expo-image`
+- [x] T005 Verify TypeScript strict mode enabled in tsconfig.json
+- [x] T006 Verify React Compiler enabled in app.json (experiments.reactCompiler: true)
 
 ---
 
