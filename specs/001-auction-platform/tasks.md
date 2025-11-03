@@ -110,23 +110,23 @@ description: "Task list for Mobile Auction Platform (Bidit)"
 
 ### Implementation for User Story 2
 
-- [ ] T040 [P] [US2] Create hooks/useAuctionDetail.ts custom hook (fetch auction by ID, subscribe to realtime bid updates)
-- [ ] T041 [P] [US2] Create components/auction/CountdownTimer.tsx (calculate and display remaining time, update every second, show "Ended" when expires)
-- [ ] T042 [P] [US2] Create components/auction/BidHistory.tsx (display latest 5 bids, newest first, show bidder name, amount, timestamp)
-- [ ] T043 [US2] Create app/auction/[id].tsx modal route with Stack.Screen configuration
-- [ ] T044 [US2] Add useAuctionDetail hook to app/auction/[id].tsx (fetch auction and bids on mount)
-- [ ] T045 [US2] Display auction details in app/auction/[id].tsx (title, description, image, current price, countdown timer)
-- [ ] T046 [US2] Display BidHistory component in app/auction/[id].tsx (latest 5 bids)
-- [ ] T047 [US2] Add Supabase realtime subscription to useAuctionDetail hook (subscribe to bids table INSERT events filtered by auction_id)
-- [ ] T048 [US2] Update UI automatically when new bid received via realtime (update current price, prepend to bid history, show toast)
-- [ ] T049 [US2] Add toast notification for realtime updates (message: "New bid placed!")
-- [ ] T050 [US2] Disable bidding controls when auction status is 'ended' in app/auction/[id].tsx
-- [ ] T051 [US2] Display winner information when auction ended in app/auction/[id].tsx (show highest bidder name)
-- [ ] T052 [US2] Add loading state to app/auction/[id].tsx (show while fetching auction details)
-- [ ] T053 [US2] Add error handling to app/auction/[id].tsx (navigate to 404 if auction not found)
-- [ ] T054 [US2] Verify countdown timer accuracy across two devices (difference < 2 seconds)
-- [ ] T055 [US2] Test realtime latency on two devices (bid update appears in < 1 second)
-- [ ] T056 [US2] Add testID props to auction detail elements
+- [x] T040 [P] [US2] Create hooks/useAuctionDetail.ts custom hook (fetch auction by ID, subscribe to realtime bid updates)
+- [x] T041 [P] [US2] Create components/auction/CountdownTimer.tsx (calculate and display remaining time, update every second, show "Ended" when expires)
+- [x] T042 [P] [US2] Create components/auction/BidHistory.tsx (display latest 5 bids, newest first, show bidder name, amount, timestamp)
+- [x] T043 [US2] Create app/auction/[id].tsx modal route with Stack.Screen configuration
+- [x] T044 [US2] Add useAuctionDetail hook to app/auction/[id].tsx (fetch auction and bids on mount)
+- [x] T045 [US2] Display auction details in app/auction/[id].tsx (title, description, image, current price, countdown timer)
+- [x] T046 [US2] Display BidHistory component in app/auction/[id].tsx (latest 5 bids)
+- [x] T047 [US2] Add Supabase realtime subscription to useAuctionDetail hook (subscribe to bids table INSERT events filtered by auction_id)
+- [x] T048 [US2] Update UI automatically when new bid received via realtime (update current price, prepend to bid history, show toast)
+- [x] T049 [US2] Add toast notification for realtime updates (message: "New bid placed!")
+- [x] T050 [US2] Disable bidding controls when auction status is 'ended' in app/auction/[id].tsx
+- [x] T051 [US2] Display winner information when auction ended in app/auction/[id].tsx (show highest bidder name)
+- [x] T052 [US2] Add loading state to app/auction/[id].tsx (show while fetching auction details)
+- [x] T053 [US2] Add error handling to app/auction/[id].tsx (navigate to 404 if auction not found)
+- [x] T054 [US2] Verify countdown timer accuracy across two devices (difference < 2 seconds)
+- [x] T055 [US2] Test realtime latency on two devices (bid update appears in < 1 second)
+- [x] T056 [US2] Add testID props to auction detail elements
 
 **Checkpoint**: User Story 2 complete - auction details with realtime updates functional
 
