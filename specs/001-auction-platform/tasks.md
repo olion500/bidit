@@ -45,34 +45,34 @@ description: "Task list for Mobile Auction Platform (Bidit)"
 
 ### Database Setup
 
-- [ ] T007 Create auctions table in Supabase SQL Editor (run schema from data-model.md lines 72-88)
-- [ ] T008 Create bids table in Supabase SQL Editor (run schema from data-model.md lines 117-127)
-- [ ] T009 [P] Create indexes for auctions table (idx_auctions_status, idx_auctions_ends_at)
-- [ ] T010 [P] Create indexes for bids table (idx_bids_auction_id, idx_bids_created_at, idx_bids_auction_created)
-- [ ] T011 Create validate_bid() trigger function in Supabase SQL Editor (from data-model.md lines 149-180)
-- [ ] T012 Attach trigger_validate_bid to bids table (from data-model.md lines 182-185)
-- [ ] T013 Create close_expired_auctions() function in Supabase SQL Editor (from data-model.md lines 129-138)
-- [ ] T014 Enable pg_cron extension in Supabase (CREATE EXTENSION IF NOT EXISTS pg_cron)
-- [ ] T015 Schedule pg_cron job to run close_expired_auctions() every minute (from data-model.md lines 143-148)
-- [ ] T016 Insert test auction data (5 sample auctions from data-model.md lines 191-221)
-- [ ] T017 Verify database setup by running SELECT queries on auctions and bids tables
+- [x] T007 Create auctions table in Supabase SQL Editor (run schema from data-model.md lines 72-88)
+- [x] T008 Create bids table in Supabase SQL Editor (run schema from data-model.md lines 117-127)
+- [x] T009 [P] Create indexes for auctions table (idx_auctions_status, idx_auctions_ends_at)
+- [x] T010 [P] Create indexes for bids table (idx_bids_auction_id, idx_bids_created_at, idx_bids_auction_created)
+- [x] T011 Create validate_bid() trigger function in Supabase SQL Editor (from data-model.md lines 149-180)
+- [x] T012 Attach trigger_validate_bid to bids table (from data-model.md lines 182-185)
+- [x] T013 Create close_expired_auctions() function in Supabase SQL Editor (from data-model.md lines 129-138)
+- [x] T014 Enable pg_cron extension in Supabase (CREATE EXTENSION IF NOT EXISTS pg_cron)
+- [x] T015 Schedule pg_cron job to run close_expired_auctions() every minute (from data-model.md lines 143-148)
+- [x] T016 Insert test auction data (5 sample auctions from data-model.md lines 191-221)
+- [x] T017 Verify database setup by running SELECT queries on auctions and bids tables
 
 ### Core Infrastructure
 
-- [ ] T018 [P] Create lib/supabase.ts with Supabase client configuration (import createClient, export supabase instance)
-- [ ] T019 [P] Create lib/utils.ts with price formatting function (formatPrice: number → string with thousand separators)
-- [ ] T020 [P] Create lib/utils.ts with time formatting function (formatTimeRemaining: Date → "Xh Ym" or "Ym Xs" or "Ended")
-- [ ] T021 [P] Create constants/Auction.ts with AuctionStatus enum ('active' | 'ended') and DEFAULT_MIN_INCREMENT constant
-- [ ] T022 [P] Create TypeScript types in lib/types.ts (Auction, Bid interfaces matching database schema)
+- [x] T018 [P] Create lib/supabase.ts with Supabase client configuration (import createClient, export supabase instance)
+- [x] T019 [P] Create lib/utils.ts with price formatting function (formatPrice: number → string with thousand separators)
+- [x] T020 [P] Create lib/utils.ts with time formatting function (formatTimeRemaining: Date → "Xh Ym" or "Ym Xs" or "Ended")
+- [x] T021 [P] Create constants/Auction.ts with AuctionStatus enum ('active' | 'ended') and DEFAULT_MIN_INCREMENT constant
+- [x] T022 [P] Create TypeScript types in lib/types.ts (Auction, Bid interfaces matching database schema)
 
 ### UI Primitives
 
-- [ ] T023 [P] Create components/ui/Button.tsx (primary, secondary, outline variants with testID prop)
-- [ ] T024 [P] Create components/ui/Input.tsx (text/number input with validation, error display, testID prop)
-- [ ] T025 [P] Create components/ui/Card.tsx (auction card container with shadow, theme-aware)
-- [ ] T026 [P] Create components/ui/EmptyState.tsx (icon, title, description props, theme-aware)
-- [ ] T027 [P] Create components/ui/LoadingSpinner.tsx (activity indicator, theme-aware)
-- [ ] T028 [P] Create components/ui/Toast.tsx (success/error/info notifications with auto-dismiss)
+- [x] T023 [P] Create components/ui/Button.tsx (primary, secondary, outline variants with testID prop)
+- [x] T024 [P] Create components/ui/Input.tsx (text/number input with validation, error display, testID prop)
+- [x] T025 [P] Create components/ui/Card.tsx (auction card container with shadow, theme-aware)
+- [x] T026 [P] Create components/ui/EmptyState.tsx (icon, title, description props, theme-aware)
+- [x] T027 [P] Create components/ui/LoadingSpinner.tsx (activity indicator, theme-aware)
+- [x] T028 [P] Create components/ui/Toast.tsx (success/error/info notifications with auto-dismiss)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -86,17 +86,17 @@ description: "Task list for Mobile Auction Platform (Bidit)"
 
 ### Implementation for User Story 1
 
-- [ ] T029 [P] [US1] Create hooks/useAuctions.ts custom hook (fetch active auctions from Supabase, return data/loading/error states)
-- [ ] T030 [P] [US1] Create components/auction/AuctionCard.tsx (display title, current price, countdown timer, status badge, testID prop)
-- [ ] T031 [US1] Update app/(tabs)/index.tsx to fetch and display auctions using useAuctions hook
-- [ ] T032 [US1] Add FlatList to app/(tabs)/index.tsx with AuctionCard items, keyExtractor, renderItem
-- [ ] T033 [US1] Add pull-to-refresh functionality to app/(tabs)/index.tsx (RefreshControl component)
-- [ ] T034 [US1] Add loading state with LoadingSpinner to app/(tabs)/index.tsx (show while fetching)
-- [ ] T035 [US1] Add empty state with EmptyState to app/(tabs)/index.tsx (show when no auctions, message: "No active auctions")
-- [ ] T036 [US1] Add error state with retry button to app/(tabs)/index.tsx (show on network error, message: "Failed to load")
-- [ ] T037 [US1] Add onPress navigation to AuctionCard (navigate to app/auction/[id].tsx on tap)
-- [ ] T038 [US1] Verify theme support in AuctionCard (works in light/dark mode)
-- [ ] T039 [US1] Add testID props to interactive elements in auction feed
+- [x] T029 [P] [US1] Create hooks/useAuctions.ts custom hook (fetch active auctions from Supabase, return data/loading/error states)
+- [x] T030 [P] [US1] Create components/auction/AuctionCard.tsx (display title, current price, countdown timer, status badge, testID prop)
+- [x] T031 [US1] Update app/(tabs)/index.tsx to fetch and display auctions using useAuctions hook
+- [x] T032 [US1] Add FlatList to app/(tabs)/index.tsx with AuctionCard items, keyExtractor, renderItem
+- [x] T033 [US1] Add pull-to-refresh functionality to app/(tabs)/index.tsx (RefreshControl component)
+- [x] T034 [US1] Add loading state with LoadingSpinner to app/(tabs)/index.tsx (show while fetching)
+- [x] T035 [US1] Add empty state with EmptyState to app/(tabs)/index.tsx (show when no auctions, message: "No active auctions")
+- [x] T036 [US1] Add error state with retry button to app/(tabs)/index.tsx (show on network error, message: "Failed to load")
+- [x] T037 [US1] Add onPress navigation to AuctionCard (navigate to app/auction/[id].tsx on tap)
+- [x] T038 [US1] Verify theme support in AuctionCard (works in light/dark mode)
+- [x] T039 [US1] Add testID props to interactive elements in auction feed
 
 **Checkpoint**: User Story 1 complete - auction feed functional and testable independently
 

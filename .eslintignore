@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+web-build/
+.expo/
+
+# Native folders
+ios/
+android/
+
+# Coverage
+coverage/
+
+# TypeScript
+*.tsbuildinfo
+
+# Minified files
+*.min.js
+
+# Generated files
+expo-env.d.ts
+
+# Config files
+*.config.js
