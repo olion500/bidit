@@ -1,98 +1,122 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
+// Tasks T031-T039: Auction Feed Screen
+import React from 'react';
+import { FlatList, StyleSheet, RefreshControl, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { useAuctions } from '@/hooks/useAuctions';
+import { AuctionCard } from '@/components/auction/AuctionCard';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { Button } from '@/components/ui/Button';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { ThemedText } from '@/components/themed-text';
+import { useThemeColor } from '@/hooks/useThemeColor';
+import type { Auction } from '@/lib/types';
 
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+export default function AuctionFeedScreen() {
+  const router = useRouter();
+  const { auctions, loading, error, refetch } = useAuctions();
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const backgroundColor = useThemeColor(
+    { light: '#F2F2F7', dark: '#000000' },
+    'background'
+  );
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
+
+  const handleAuctionPress = (auctionId: string) => {
+    router.push(`/auction/${auctionId}`);
+  };
+
+  const renderAuctionCard = ({ item }: { item: Auction }) => (
+    <AuctionCard
+      auction={item}
+      onPress={() => handleAuctionPress(item.id)}
+      testID={`auction-card-${item.id}`}
+    />
+  );
+
+  // T034: Loading state
+  if (loading && !refreshing) {
+    return (
+      <ThemedView style={styles.container}>
+        <LoadingSpinner testID="auction-feed-loading" />
+      </ThemedView>
+    );
+  }
+
+  // T036: Error state with retry button
+  if (error && !refreshing) {
+    return (
+      <ThemedView style={styles.container}>
+        <View style={styles.errorContainer}>
+          <EmptyState
+            icon="⚠️"
+            title="Failed to load"
+            description="Could not fetch auctions. Please check your connection and try again."
+            testID="auction-feed-error"
+          />
+          <Button
+            onPress={() => refetch()}
+            variant="primary"
+            testID="auction-feed-retry"
+          >
+            Retry
+          </Button>
+        </View>
+      </ThemedView>
+    );
+  }
+
+  // T035: Empty state
+  if (!loading && auctions.length === 0) {
+    return (
+      <ThemedView style={styles.container}>
+        <EmptyState
+          icon="🔨"
+          title="No active auctions"
+          description="Check back later or create your own auction"
+          testID="auction-feed-empty"
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    );
+  }
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  // T032, T033, T037, T039: FlatList with pull-to-refresh and navigation
+  return (
+    <ThemedView style={[styles.container, { backgroundColor }]}>
+      <FlatList
+        data={auctions}
+        renderItem={renderAuctionCard}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.listContent}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            testID="auction-feed-refresh"
+          />
+        }
+        testID="auction-feed-list"
+      />
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  listContent: {
+    padding: 16,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16,
   },
 });
