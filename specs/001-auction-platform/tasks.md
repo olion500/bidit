@@ -140,21 +140,21 @@ description: "Task list for Mobile Auction Platform (Bidit)"
 
 ### Implementation for User Story 3
 
-- [ ] T057 [P] [US3] Create hooks/usePlaceBid.ts custom hook (insert bid into Supabase, handle validation errors, return submit function and loading state)
-- [ ] T058 [P] [US3] Create components/auction/BidInput.tsx (bid amount input, quick bid buttons +1,000원/+5,000원/+10,000원, submit button, testID props)
-- [ ] T059 [US3] Add BidInput component to app/auction/[id].tsx (sticky at bottom of screen)
-- [ ] T060 [US3] Connect BidInput to usePlaceBid hook in app/auction/[id].tsx
-- [ ] T061 [US3] Implement optimistic UI update in usePlaceBid (update local state immediately before server confirms)
-- [ ] T062 [US3] Add success toast on bid placement (message: "Bid placed successfully!")
-- [ ] T063 [US3] Add error handling for "bid too low" validation (toast message: "Bid too low - minimum is X원")
-- [ ] T064 [US3] Add error handling for "auction ended" validation (toast message: "Auction has ended")
-- [ ] T065 [US3] Add error handling for network failures (toast message: "Failed to place bid. Please try again.")
-- [ ] T066 [US3] Implement rollback on error (revert optimistic update if bid fails)
-- [ ] T067 [US3] Disable bid input when auction status is 'ended'
-- [ ] T068 [US3] Add loading indicator to submit button while bid is being processed
-- [ ] T069 [US3] Test bid validation with amount below minimum (verify error message)
-- [ ] T070 [US3] Test bid submission on two devices (verify second device receives update via realtime)
-- [ ] T071 [US3] Verify optimistic UI provides instant feedback before server confirms
+- [x] T057 [P] [US3] Create hooks/usePlaceBid.ts custom hook (insert bid into Supabase, handle validation errors, return submit function and loading state)
+- [x] T058 [P] [US3] Create components/auction/BidInput.tsx (bid amount input, quick bid buttons +1,000원/+5,000원/+10,000원, submit button, testID props)
+- [x] T059 [US3] Add BidInput component to app/auction/[id].tsx (sticky at bottom of screen)
+- [x] T060 [US3] Connect BidInput to usePlaceBid hook in app/auction/[id].tsx
+- [x] T061 [US3] Implement optimistic UI update in usePlaceBid (update local state immediately before server confirms)
+- [x] T062 [US3] Add success toast on bid placement (message: "Bid placed successfully!")
+- [x] T063 [US3] Add error handling for "bid too low" validation (toast message: "Bid too low - minimum is X원")
+- [x] T064 [US3] Add error handling for "auction ended" validation (toast message: "Auction has ended")
+- [x] T065 [US3] Add error handling for network failures (toast message: "Failed to place bid. Please try again.")
+- [x] T066 [US3] Implement rollback on error (revert optimistic update if bid fails)
+- [x] T067 [US3] Disable bid input when auction status is 'ended'
+- [x] T068 [US3] Add loading indicator to submit button while bid is being processed
+- [x] T069 [US3] Test bid validation with amount below minimum (verify error message)
+- [x] T070 [US3] Test bid submission on two devices (verify second device receives update via realtime)
+- [x] T071 [US3] Verify optimistic UI provides instant feedback before server confirms
 
 **Checkpoint**: User Story 3 complete - bidding functional with realtime sync across devices
 

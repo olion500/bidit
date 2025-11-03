@@ -1,10 +1,12 @@
-// Tasks T043-T056: Auction Detail Screen with Realtime Updates
-import React, { useEffect } from 'react';
+// Tasks T043-T071: Auction Detail Screen with Realtime Updates and Bidding
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { useLocalSearchParams, useRouter, Stack } from 'expo-router';
 import { useAuctionDetail } from '@/hooks/useAuctionDetail';
+import { usePlaceBid } from '@/hooks/usePlaceBid';
 import { CountdownTimer } from '@/components/auction/CountdownTimer';
 import { BidHistory } from '@/components/auction/BidHistory';
+import { BidInput } from '@/components/auction/BidInput';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Button } from '@/components/ui/Button';
@@ -12,12 +14,18 @@ import { Toast, useToast } from '@/components/ui/Toast';
 import { ThemedView } from '@/components/themed-view';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { formatPrice } from '@/lib/utils';
+import type { Bid } from '@/lib/types';
 
 export default function AuctionDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const { auction, bids, loading, error, refetch } = useAuctionDetail(id!);
+  const { placeBid, loading: bidLoading } = usePlaceBid();
   const { toast, showToast, hideToast } = useToast();
+
+  // T061: Optimistic UI state
+  const [optimisticBid, setOptimisticBid] = useState<Bid | null>(null);
+  const [optimisticPrice, setOptimisticPrice] = useState<number | null>(null);
 
   const textColor = useThemeColor({ light: '#000000', dark: '#FFFFFF' }, 'text');
   const secondaryTextColor = useThemeColor(
@@ -35,9 +43,43 @@ export default function AuctionDetailScreen() {
   useEffect(() => {
     if (bids.length > prevBidsLength.current && prevBidsLength.current > 0) {
       showToast('New bid placed!', 'info');
+      // T066: Clear optimistic state when real bid arrives
+      setOptimisticBid(null);
+      setOptimisticPrice(null);
     }
     prevBidsLength.current = bids.length;
   }, [bids.length, showToast]);
+
+  // T060, T061, T062, T063, T064, T065, T066: Handle bid submission
+  const handlePlaceBid = async (amount: number) => {
+    if (!auction) return;
+
+    // T061: Optimistic UI update
+    const optimisticBidData: Bid = {
+      id: 'optimistic-' + Date.now(),
+      auction_id: auction.id,
+      bidder_name: 'Anonymous',
+      amount,
+      created_at: new Date().toISOString(),
+    };
+
+    setOptimisticBid(optimisticBidData);
+    setOptimisticPrice(amount);
+
+    try {
+      await placeBid(auction.id, amount);
+      // T062: Success toast
+      showToast('Bid placed successfully!', 'success');
+    } catch (err) {
+      // T066: Rollback optimistic update on error
+      setOptimisticBid(null);
+      setOptimisticPrice(null);
+
+      // T063, T064, T065: Show appropriate error message
+      const error = err as Error;
+      showToast(error.message, 'error');
+    }
+  };
 
   // T052: Loading state
   if (loading) {
@@ -78,7 +120,11 @@ export default function AuctionDetailScreen() {
   }
 
   const isEnded = auction.status === 'ended';
-  const highestBid = bids.length > 0 ? bids[0] : null;
+
+  // T061: Display optimistic bid if present, otherwise show actual bids
+  const displayBids = optimisticBid ? [optimisticBid, ...bids] : bids;
+  const displayPrice = optimisticPrice ?? auction.current_price;
+  const highestBid = displayBids.length > 0 ? displayBids[0] : null;
 
   return (
     <>
@@ -141,7 +187,7 @@ export default function AuctionDetailScreen() {
                   style={[styles.price, { color: priceColor }]}
                   testID="auction-detail-price"
                 >
-                  {formatPrice(auction.current_price)}
+                  {formatPrice(displayPrice)}
                 </Text>
               </View>
 
@@ -178,16 +224,19 @@ export default function AuctionDetailScreen() {
               </View>
             )}
 
-            {/* T046: Display BidHistory component */}
-            <BidHistory bids={bids} testID="auction-detail-bid-history" />
+            {/* T046: Display BidHistory component with optimistic bid */}
+            <BidHistory bids={displayBids} testID="auction-detail-bid-history" />
 
-            {/* T050: Note about bidding (actual bid input in Phase 5) */}
+            {/* T059, T067, T068: BidInput component */}
             {!isEnded && (
-              <View style={styles.bidPlaceholder}>
-                <Text style={[styles.placeholderText, { color: secondaryTextColor }]}>
-                  Bidding will be available in the next phase
-                </Text>
-              </View>
+              <BidInput
+                currentPrice={displayPrice}
+                minIncrement={auction.min_increment}
+                onSubmit={handlePlaceBid}
+                disabled={isEnded}
+                loading={bidLoading}
+                testID="auction-detail-bid-input"
+              />
             )}
           </View>
         </ScrollView>
@@ -286,16 +335,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     textAlign: 'center',
-  },
-  bidPlaceholder: {
-    padding: 16,
-    borderRadius: 8,
-    backgroundColor: '#F2F2F7',
-    alignItems: 'center',
-    marginTop: 16,
-  },
-  placeholderText: {
-    fontSize: 14,
-    fontStyle: 'italic',
   },
 });
