@@ -13,15 +13,15 @@
 | **Phase 1** | Setup | 6/6 | ✅ COMPLETE |
 | **Phase 2** | Foundational | 22/22 | ✅ COMPLETE |
 | **Phase 3** | US1 - Browse Auctions (P1) | 11/11 | ✅ COMPLETE |
-| **Phase 4** | US2 - View Details (P1) | 0/17 | ⏳ PENDING |
+| **Phase 4** | US2 - View Details (P1) | 17/17 | ✅ COMPLETE |
 | **Phase 5** | US3 - Place Bids (P1) | 0/15 | ⏳ PENDING |
 | **Phase 6** | US4 - Create Auctions (P2) | 0/11 | ⏳ PENDING |
 | **Phase 7** | US5 - Search/Filter (P3) | 0/11 | ⏳ PENDING |
 | **Phase 8** | US6 - My Bids (P3) | 0/10 | ⏳ PENDING |
 | **Phase 9** | Polish | 0/12 | ⏳ PENDING |
 
-**Overall Progress**: 39/115 tasks (34%)
-**MVP Progress (P1)**: 39/71 tasks (55%)
+**Overall Progress**: 56/115 tasks (49%)
+**MVP Progress (P1)**: 56/71 tasks (79%)
 
 ---
 
@@ -131,31 +131,40 @@ bidit/
 
 ## 🚀 Next Steps
 
-### Immediate: Phase 4 (User Story 2 - View Auction Details)
+### Phase 4: User Story 2 - View Auction Details (✅ COMPLETE)
 
-**17 tasks remaining** to complete realtime bid updates:
+**All 17 tasks completed:**
 
-1. Create `hooks/useAuctionDetail.ts` - Fetch auction + realtime subscriptions
-2. Create `components/auction/BidHistory.tsx` - Display latest 5 bids
-3. Create `app/auction/[id].tsx` - Auction detail modal with:
-   - Full auction information
-   - Realtime bid updates (< 1 second latency)
-   - Countdown timer
-   - Bid history
-   - Winner display when ended
-4. Implement Supabase realtime subscriptions:
-   - Subscribe to bid INSERT events
-   - Subscribe to auction status UPDATE events
-5. Add toast notifications for realtime updates
+- ✅ `hooks/useAuctionDetail.ts` - Fetches auction + realtime subscriptions
+- ✅ `components/auction/BidHistory.tsx` - Displays latest 5 bids
+- ✅ `app/auction/[id].tsx` - Full auction detail screen with:
+  - Complete auction information (title, description, image, price)
+  - Realtime bid updates via Supabase subscriptions
+  - Countdown timer (updates every second)
+  - Bid history component
+  - Winner display when ended
+  - Loading and error states
+  - Toast notifications for new bids
+  - All testID props for testing
+
+### Immediate: Phase 5 (User Story 3 - Place Bids)
+
+**15 tasks remaining** to complete MVP:
+
+1. Create `hooks/usePlaceBid.ts` - Bid submission with validation
+2. Create `components/auction/BidInput.tsx` - Bid input with quick buttons
+3. Integrate bid placement into auction detail screen
+4. Implement optimistic UI updates
+5. Add success/error toast notifications
+6. Handle validation errors (bid too low, auction ended)
 
 ### Critical Path to MVP
 
-1. ✅ Phase 1-3: Complete (39/39 tasks)
-2. ⏳ **Phase 4 (US2)**: View Details - 17 tasks
-3. ⏳ **Phase 5 (US3)**: Place Bids - 15 tasks
-4. 🎯 **MVP READY**: Test on two devices, verify < 1s realtime
+1. ✅ Phase 1-4: Complete (56/56 tasks)
+2. ⏳ **Phase 5 (US3)**: Place Bids - 15 tasks remaining
+3. 🎯 **MVP READY**: Test on two devices, verify < 1s realtime
 
-**MVP Completion**: 32 tasks remaining (71 total → 71%)
+**MVP Completion**: 15 tasks remaining (71 total → 79%)
 
 ---
 

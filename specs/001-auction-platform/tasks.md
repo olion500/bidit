@@ -110,23 +110,23 @@ description: "Task list for Mobile Auction Platform (Bidit)"
 
 ### Implementation for User Story 2
 
-- [ ] T040 [P] [US2] Create hooks/useAuctionDetail.ts custom hook (fetch auction by ID, subscribe to realtime bid updates)
-- [ ] T041 [P] [US2] Create components/auction/CountdownTimer.tsx (calculate and display remaining time, update every second, show "Ended" when expires)
-- [ ] T042 [P] [US2] Create components/auction/BidHistory.tsx (display latest 5 bids, newest first, show bidder name, amount, timestamp)
-- [ ] T043 [US2] Create app/auction/[id].tsx modal route with Stack.Screen configuration
-- [ ] T044 [US2] Add useAuctionDetail hook to app/auction/[id].tsx (fetch auction and bids on mount)
-- [ ] T045 [US2] Display auction details in app/auction/[id].tsx (title, description, image, current price, countdown timer)
-- [ ] T046 [US2] Display BidHistory component in app/auction/[id].tsx (latest 5 bids)
-- [ ] T047 [US2] Add Supabase realtime subscription to useAuctionDetail hook (subscribe to bids table INSERT events filtered by auction_id)
-- [ ] T048 [US2] Update UI automatically when new bid received via realtime (update current price, prepend to bid history, show toast)
-- [ ] T049 [US2] Add toast notification for realtime updates (message: "New bid placed!")
-- [ ] T050 [US2] Disable bidding controls when auction status is 'ended' in app/auction/[id].tsx
-- [ ] T051 [US2] Display winner information when auction ended in app/auction/[id].tsx (show highest bidder name)
-- [ ] T052 [US2] Add loading state to app/auction/[id].tsx (show while fetching auction details)
-- [ ] T053 [US2] Add error handling to app/auction/[id].tsx (navigate to 404 if auction not found)
-- [ ] T054 [US2] Verify countdown timer accuracy across two devices (difference < 2 seconds)
-- [ ] T055 [US2] Test realtime latency on two devices (bid update appears in < 1 second)
-- [ ] T056 [US2] Add testID props to auction detail elements
+- [x] T040 [P] [US2] Create hooks/useAuctionDetail.ts custom hook (fetch auction by ID, subscribe to realtime bid updates)
+- [x] T041 [P] [US2] Create components/auction/CountdownTimer.tsx (calculate and display remaining time, update every second, show "Ended" when expires)
+- [x] T042 [P] [US2] Create components/auction/BidHistory.tsx (display latest 5 bids, newest first, show bidder name, amount, timestamp)
+- [x] T043 [US2] Create app/auction/[id].tsx modal route with Stack.Screen configuration
+- [x] T044 [US2] Add useAuctionDetail hook to app/auction/[id].tsx (fetch auction and bids on mount)
+- [x] T045 [US2] Display auction details in app/auction/[id].tsx (title, description, image, current price, countdown timer)
+- [x] T046 [US2] Display BidHistory component in app/auction/[id].tsx (latest 5 bids)
+- [x] T047 [US2] Add Supabase realtime subscription to useAuctionDetail hook (subscribe to bids table INSERT events filtered by auction_id)
+- [x] T048 [US2] Update UI automatically when new bid received via realtime (update current price, prepend to bid history, show toast)
+- [x] T049 [US2] Add toast notification for realtime updates (message: "New bid placed!")
+- [x] T050 [US2] Disable bidding controls when auction status is 'ended' in app/auction/[id].tsx
+- [x] T051 [US2] Display winner information when auction ended in app/auction/[id].tsx (show highest bidder name)
+- [x] T052 [US2] Add loading state to app/auction/[id].tsx (show while fetching auction details)
+- [x] T053 [US2] Add error handling to app/auction/[id].tsx (navigate to 404 if auction not found)
+- [x] T054 [US2] Verify countdown timer accuracy across two devices (difference < 2 seconds)
+- [x] T055 [US2] Test realtime latency on two devices (bid update appears in < 1 second)
+- [x] T056 [US2] Add testID props to auction detail elements
 
 **Checkpoint**: User Story 2 complete - auction details with realtime updates functional
 
@@ -140,21 +140,21 @@ description: "Task list for Mobile Auction Platform (Bidit)"
 
 ### Implementation for User Story 3
 
-- [ ] T057 [P] [US3] Create hooks/usePlaceBid.ts custom hook (insert bid into Supabase, handle validation errors, return submit function and loading state)
-- [ ] T058 [P] [US3] Create components/auction/BidInput.tsx (bid amount input, quick bid buttons +1,000원/+5,000원/+10,000원, submit button, testID props)
-- [ ] T059 [US3] Add BidInput component to app/auction/[id].tsx (sticky at bottom of screen)
-- [ ] T060 [US3] Connect BidInput to usePlaceBid hook in app/auction/[id].tsx
-- [ ] T061 [US3] Implement optimistic UI update in usePlaceBid (update local state immediately before server confirms)
-- [ ] T062 [US3] Add success toast on bid placement (message: "Bid placed successfully!")
-- [ ] T063 [US3] Add error handling for "bid too low" validation (toast message: "Bid too low - minimum is X원")
-- [ ] T064 [US3] Add error handling for "auction ended" validation (toast message: "Auction has ended")
-- [ ] T065 [US3] Add error handling for network failures (toast message: "Failed to place bid. Please try again.")
-- [ ] T066 [US3] Implement rollback on error (revert optimistic update if bid fails)
-- [ ] T067 [US3] Disable bid input when auction status is 'ended'
-- [ ] T068 [US3] Add loading indicator to submit button while bid is being processed
-- [ ] T069 [US3] Test bid validation with amount below minimum (verify error message)
-- [ ] T070 [US3] Test bid submission on two devices (verify second device receives update via realtime)
-- [ ] T071 [US3] Verify optimistic UI provides instant feedback before server confirms
+- [x] T057 [P] [US3] Create hooks/usePlaceBid.ts custom hook (insert bid into Supabase, handle validation errors, return submit function and loading state)
+- [x] T058 [P] [US3] Create components/auction/BidInput.tsx (bid amount input, quick bid buttons +1,000원/+5,000원/+10,000원, submit button, testID props)
+- [x] T059 [US3] Add BidInput component to app/auction/[id].tsx (sticky at bottom of screen)
+- [x] T060 [US3] Connect BidInput to usePlaceBid hook in app/auction/[id].tsx
+- [x] T061 [US3] Implement optimistic UI update in usePlaceBid (update local state immediately before server confirms)
+- [x] T062 [US3] Add success toast on bid placement (message: "Bid placed successfully!")
+- [x] T063 [US3] Add error handling for "bid too low" validation (toast message: "Bid too low - minimum is X원")
+- [x] T064 [US3] Add error handling for "auction ended" validation (toast message: "Auction has ended")
+- [x] T065 [US3] Add error handling for network failures (toast message: "Failed to place bid. Please try again.")
+- [x] T066 [US3] Implement rollback on error (revert optimistic update if bid fails)
+- [x] T067 [US3] Disable bid input when auction status is 'ended'
+- [x] T068 [US3] Add loading indicator to submit button while bid is being processed
+- [x] T069 [US3] Test bid validation with amount below minimum (verify error message)
+- [x] T070 [US3] Test bid submission on two devices (verify second device receives update via realtime)
+- [x] T071 [US3] Verify optimistic UI provides instant feedback before server confirms
 
 **Checkpoint**: User Story 3 complete - bidding functional with realtime sync across devices
 
