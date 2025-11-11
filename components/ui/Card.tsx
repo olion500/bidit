@@ -1,7 +1,7 @@
 // Task T025: Create components/ui/Card.tsx
 import React from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColor } from '@/hooks/use-theme-color';
 
 interface CardProps {
   children: React.ReactNode;

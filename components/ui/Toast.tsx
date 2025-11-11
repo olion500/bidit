@@ -1,7 +1,7 @@
 // Task T028: Create components/ui/Toast.tsx
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColor } from '@/hooks/use-theme-color';
 
 export type ToastType = 'success' | 'error' | 'info';
 

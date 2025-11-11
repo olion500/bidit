@@ -1,7 +1,7 @@
 // Task T026: Create components/ui/EmptyState.tsx
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColor } from '@/hooks/use-theme-color';
 
 interface EmptyStateProps {
   icon?: string;

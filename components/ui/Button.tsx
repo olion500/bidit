@@ -1,7 +1,7 @@
 // Task T023: Create components/ui/Button.tsx
 import React from 'react';
 import { Pressable, Text, StyleSheet, ViewStyle, TextStyle, ActivityIndicator } from 'react-native';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColor } from '@/hooks/use-theme-color';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline';
 

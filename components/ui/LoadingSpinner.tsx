@@ -1,7 +1,7 @@
 // Task T027: Create components/ui/LoadingSpinner.tsx
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColor } from '@/hooks/use-theme-color';
 
 interface LoadingSpinnerProps {
   size?: 'small' | 'large';

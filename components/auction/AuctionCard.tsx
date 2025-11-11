@@ -4,7 +4,7 @@ import { View, Text, Pressable, StyleSheet, Image } from 'react-native';
 import { Card } from '@/components/ui/Card';
 import { CountdownTimer } from './CountdownTimer';
 import { formatPrice, getRemainingMs } from '@/lib/utils';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColor } from '@/hooks/use-theme-color';
 import type { Auction } from '@/lib/types';
 import { ENDING_SOON_THRESHOLD_MS, STATUS_LABELS } from '@/constants/Auction';
 

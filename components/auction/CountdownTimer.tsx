@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, StyleSheet, TextStyle } from 'react-native';
 import { formatTimeRemaining, getRemainingMs } from '@/lib/utils';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColor } from '@/hooks/use-theme-color';
 import { ENDING_SOON_THRESHOLD_MS } from '@/constants/Auction';
 
 interface CountdownTimerProps {

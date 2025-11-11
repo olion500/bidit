@@ -8,7 +8,7 @@ import {
   TextInputProps,
   KeyboardTypeOptions,
 } from 'react-native';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColor } from '@/hooks/use-theme-color';
 
 interface InputProps extends Omit<TextInputProps, 'keyboardType'> {
   label?: string;

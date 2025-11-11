@@ -12,7 +12,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { Button } from '@/components/ui/Button';
 import { Toast, useToast } from '@/components/ui/Toast';
 import { ThemedView } from '@/components/themed-view';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColor } from '@/hooks/use-theme-color';
 import { formatPrice } from '@/lib/utils';
 import type { Bid } from '@/lib/types';
 

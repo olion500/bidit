@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { Card } from '@/components/ui/Card';
 import { formatPrice, formatRelativeTime } from '@/lib/utils';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeColor } from '@/hooks/use-theme-color';
 import type { Bid } from '@/lib/types';
 
 interface BidHistoryProps {
