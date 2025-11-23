@@ -13,7 +13,8 @@
     "lint": "expo lint",
     "draft": "npx eas-cli@latest workflow:run create-draft.yml",
     "development-builds": "npx eas-cli@latest workflow:run create-development-builds.yml",
-    "deploy": "npx eas-cli@latest workflow:run deploy-to-production.yml"
+    "deploy": "npx eas-cli@latest workflow:run deploy-to-production.yml",
+    "seed": "node ./scripts/seed-data.js"
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
@@ -23,11 +24,13 @@
     "@react-navigation/native": "^7.1.8",
     "@supabase/supabase-js": "^2.78.0",
     "expo": "~54.0.10",
+    "expo-blur": "~15.0.7",
     "expo-constants": "~18.0.9",
     "expo-dev-client": "~6.0.16",
     "expo-font": "~14.0.8",
     "expo-haptics": "~15.0.7",
     "expo-image": "~3.0.10",
+    "expo-linear-gradient": "~15.0.7",
     "expo-linking": "~8.0.8",
     "expo-router": "~6.0.8",
     "expo-splash-screen": "~31.0.10",
@@ -48,6 +51,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
+    "dotenv": "^17.2.3",
     "eas-cli": "^16.26.0",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
