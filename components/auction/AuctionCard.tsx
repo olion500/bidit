@@ -1,12 +1,12 @@
 // Task T030: Create components/auction/AuctionCard.tsx
-import React from 'react';
-import { View, Text, Pressable, StyleSheet, Image } from 'react-native';
-import { Card } from '@/components/ui/Card';
-import { CountdownTimer } from './CountdownTimer';
-import { formatPrice, getRemainingMs } from '@/lib/utils';
-import { useThemeColor } from '@/hooks/use-theme-color';
+import { ENDING_SOON_THRESHOLD_MS } from '@/constants/Auction';
 import type { Auction } from '@/lib/types';
-import { ENDING_SOON_THRESHOLD_MS, STATUS_LABELS } from '@/constants/Auction';
+import { formatPrice, getRemainingMs } from '@/lib/utils';
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { CountdownTimer } from './CountdownTimer';
 
 interface AuctionCardProps {
   auction: Auction;
@@ -14,139 +14,200 @@ interface AuctionCardProps {
   testID?: string;
 }
 
-export function AuctionCard({ auction, onPress, testID }: AuctionCardProps) {
-  const textColor = useThemeColor({ light: '#000000', dark: '#FFFFFF' }, 'text');
-  const secondaryTextColor = useThemeColor(
-    { light: '#8E8E93', dark: '#636366' },
-    'text'
-  );
-  const priceColor = useThemeColor({ light: '#007AFF', dark: '#0A84FF' }, 'tint');
+const { width } = Dimensions.get('window');
+const CARD_WIDTH = width - 32;
+const IMAGE_HEIGHT = CARD_WIDTH * 1.1; // 4:5 aspect ratio roughly, or just tall
 
+export function AuctionCard({ auction, onPress, testID }: AuctionCardProps) {
   const isActive = auction.status === 'active';
   const remainingMs = getRemainingMs(auction.ends_at);
   const isEndingSoon = isActive && remainingMs <= ENDING_SOON_THRESHOLD_MS && remainingMs > 0;
 
-  const statusBadgeColor = auction.status === 'ended' ? '#8E8E93' : isEndingSoon ? '#FF9500' : '#34C759';
-  const statusLabel = auction.status === 'ended'
-    ? STATUS_LABELS.ended
-    : isEndingSoon
-      ? 'Ending Soon'
-      : STATUS_LABELS.active;
-
   return (
     <Pressable
       onPress={onPress}
-      style={({ pressed }) => [pressed && styles.pressed]}
+      style={({ pressed }) => [styles.container, pressed && styles.pressed]}
       testID={testID}
     >
-      <Card style={styles.card}>
-        {auction.image_url && (
+      <View style={styles.imageContainer}>
+        {auction.image_url ? (
           <Image
             source={{ uri: auction.image_url }}
             style={styles.image}
             resizeMode="cover"
           />
+        ) : (
+          <View style={[styles.image, { backgroundColor: '#F2F2F7' }]} />
         )}
-        <View style={styles.content}>
-          <View style={styles.header}>
-            <Text style={[styles.title, { color: textColor }]} numberOfLines={2}>
-              {auction.title}
-            </Text>
-            <View style={[styles.statusBadge, { backgroundColor: statusBadgeColor }]}>
-              <Text style={styles.statusText}>{statusLabel}</Text>
-            </View>
-          </View>
 
-          <View style={styles.details}>
-            <View style={styles.priceContainer}>
-              <Text style={[styles.priceLabel, { color: secondaryTextColor }]}>
-                Current Price
-              </Text>
-              <Text style={[styles.price, { color: priceColor }]}>
+        {/* Gradient Overlay */}
+        <LinearGradient
+          colors={['transparent', 'rgba(0,0,0,0.6)']}
+          style={styles.gradient}
+        />
+
+        {/* Live Badge */}
+        {isActive && (
+          <View style={[styles.badge, isEndingSoon && styles.badgeUrgent]}>
+            <View style={[styles.dot, isEndingSoon && styles.dotUrgent]} />
+            <Text style={styles.badgeText}>
+              {isEndingSoon ? 'Ending Soon' : 'Live'}
+            </Text>
+          </View>
+        )}
+
+        {/* Heart Icon */}
+        <View style={styles.heartButton}>
+          <Ionicons name="heart-outline" size={24} color="white" />
+        </View>
+
+        {/* Content Overlay */}
+        <View style={styles.overlayContent}>
+          <Text style={styles.title} numberOfLines={2}>
+            {auction.title}
+          </Text>
+
+          <View style={styles.detailsRow}>
+            <View>
+              <Text style={styles.priceLabel}>Current Bid</Text>
+              <Text style={styles.price}>
                 {formatPrice(auction.current_price)}
               </Text>
             </View>
 
             <View style={styles.timerContainer}>
-              <Text style={[styles.timerLabel, { color: secondaryTextColor }]}>
-                {auction.status === 'ended' ? 'Ended' : 'Ends in'}
-              </Text>
+              <Ionicons name="time-outline" size={16} color="white" style={{ marginRight: 4 }} />
               <CountdownTimer
                 endsAt={auction.ends_at}
-                style={styles.countdown}
+                style={styles.timer}
                 testID={`${testID}-countdown`}
               />
             </View>
           </View>
         </View>
-      </Card>
+      </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
-    marginBottom: 12,
-    padding: 0,
+  container: {
+    marginBottom: 24,
+    borderRadius: 24,
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.1,
+    shadowRadius: 16,
+    elevation: 8,
     overflow: 'hidden',
   },
   pressed: {
-    opacity: 0.7,
+    transform: [{ scale: 0.98 }],
+  },
+  imageContainer: {
+    width: '100%',
+    height: IMAGE_HEIGHT,
+    position: 'relative',
   },
   image: {
     width: '100%',
-    height: 200,
-    backgroundColor: '#F2F2F7',
+    height: '100%',
   },
-  content: {
-    padding: 16,
+  gradient: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: '50%',
   },
-  header: {
+  badge: {
+    position: 'absolute',
+    top: 16,
+    left: 16,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 12,
+    alignItems: 'center',
+    gap: 6,
+    backdropFilter: 'blur(10px)', // Note: backdropFilter is web-only usually, but good for intent
   },
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    flex: 1,
-    marginRight: 12,
+  badgeUrgent: {
+    backgroundColor: '#FF3B30',
   },
-  statusBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
+  dot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#34C759',
   },
-  statusText: {
+  dotUrgent: {
+    backgroundColor: 'white',
+  },
+  badgeText: {
+    color: 'white',
     fontSize: 12,
     fontWeight: '600',
-    color: '#FFFFFF',
+    textTransform: 'uppercase',
   },
-  details: {
+  heartButton: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  overlayContent: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: 'white',
+    marginBottom: 16,
+    textShadowColor: 'rgba(0,0,0,0.3)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
+  },
+  detailsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
   },
-  priceContainer: {
-    flex: 1,
-  },
   priceLabel: {
+    color: 'rgba(255,255,255,0.8)',
     fontSize: 12,
     marginBottom: 4,
+    fontWeight: '500',
   },
   price: {
-    fontSize: 20,
+    color: 'white',
+    fontSize: 24,
     fontWeight: '700',
   },
   timerContainer: {
-    alignItems: 'flex-end',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.3)',
   },
-  timerLabel: {
-    fontSize: 12,
-    marginBottom: 4,
-  },
-  countdown: {
-    fontSize: 16,
+  timer: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });
